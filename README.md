@@ -29,6 +29,37 @@ Basta executar o comando acima somente. Todo o necessário para a aplicação fu
   - 🟥 Formulário de pedidos
   - 🟥 Área administrativa para aprovação/cancelamento de pedidos
 
+## Schema
+
+```mermaid
+erDiagram
+
+users {
+  int id
+  string name
+  string email
+  string password
+  string role
+}
+
+notifications {
+  int id
+  int user_id
+  string subject
+  string body
+}
+
+trip_requests {
+  int id
+  int user_id
+  string name
+  string destination
+  string departure_date
+  string return_date
+  string status
+}
+```
+
 ## Desafio
 
 Desenvolva uma aplicação Full Stack que gerencia pedidos de viagem corporativa. O sistema deve ter uma API REST desenvolvida em Laravel e uma interface interativa em Vue.js para que os usuários possam interagir com as funcionalidades.
