@@ -1,12 +1,21 @@
+volumes:
+  cloudbeaver_volume:
+
+
 services:
+  database:
+    build: ./database
+    ports:
+      - 3306:3306
+
   backend:
     build: ./backend
     volumes:
       - ./backend/app:/app
     ports:
       - 8000:8000
-    # depends_on:
-    #   - database
+    depends_on:
+      - database
 
   frontend:
     image: node:22
@@ -16,3 +25,11 @@ services:
       - ./frontend/app:/app
     ports:
       - 3000:3000
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver
+    volumes:
+      - cloudbeaver_volume:/opt/cloudbeaver/workspace
+      - ./backend/app/database/database.sqlite:/app/database.sqlite:ro
+    ports:
+      - 8978:8978
