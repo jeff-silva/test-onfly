@@ -34,7 +34,7 @@ Basta executar o comando acima somente. Todo o necessário para a aplicação fu
 ```mermaid
 erDiagram
 
-users {
+app_user {
   int id
   string name
   string email
@@ -42,22 +42,26 @@ users {
   string role
 }
 
-notifications {
+app_notification {
   int id
-  int user_id
+  int user_id FK
   string subject
   string body
 }
 
-trip_requests {
+trip_request {
   int id
-  int user_id
+  int user_id FK
   string name
-  string destination
+  json destination
   string departure_date
   string return_date
   string status
 }
+
+app_user ||--o{ app_notification : "has many"
+app_user ||--o{ trip_request : "has many"
+
 ```
 
 ## Desafio
