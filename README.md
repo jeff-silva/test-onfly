@@ -1,4 +1,33 @@
-# test-onfly
+# Teste Onfly
+
+## Instalação e execução
+
+```bash
+yarn dev
+```
+
+Basta executar o comando acima somente. Todo o necessário para a aplicação funcionar será instalado automaticamente sem nenhum comando adicional.
+
+| Serviço     | URL                   |
+| ----------- | --------------------- |
+| Backend     | http://localhost:8000 |
+| Frontend    | http://localhost:3000 |
+| Cloudbeaver | http://localhost:8978 |
+
+## Tasks
+
+- Backend
+  - ✅ ~~Criar o repositório~~
+  - ✅ ~~Preparar ambiente Docker~~
+  - ✅ ~~Usuários (id, name, email, password, role)~~
+  - 🟥 Sistema de autenticação
+  - 🟥 Notificação (id, name, message, to_user_id)
+  - 🟥 Pedido de viagem (id, name, destination, departure_date, return_date, status)
+- Frontend
+  - 🟥 Autenticação
+  - 🟥 Dashboard
+  - 🟥 Formulário de pedidos
+  - 🟥 Área administrativa para aprovação/cancelamento de pedidos
 
 ## Desafio
 
@@ -52,18 +81,3 @@ Requisitos do Front-end (Vue.js)
 - Configurar o ambiente (variáveis de ambiente, banco de dados, etc.).
 - Executar os testes.
 - Qualquer informação adicional que você considere relevante.
-
-## Tasks
-
-- Backend
-  - ✅ ~~Criar o repositório~~
-  - 🟥 Preparar ambiente Docker
-  - 🟥 Usuários (id, name, email, password, role)
-  - 🟥 Sistema de autenticação
-  - 🟥 Notificação (id, name, message, to_user_id)
-  - 🟥 Pedido de viagem (id, name, destination, departure_date, return_date, status)
-- Frontend
-  - 🟥 Autenticação
-  - 🟥 Dashboard
-  - 🟥 Formulário de pedidos
-  - 🟥 Área administrativa para aprovação/cancelamento de pedidos
