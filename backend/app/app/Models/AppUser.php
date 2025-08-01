@@ -52,4 +52,20 @@ class AppUser extends Authenticatable
             'role' => AppUserRole::class,
         ];
     }
+
+    public function searchParams()
+    {
+        return [
+            'roles' => [],
+        ];
+    }
+
+    public function searchQuery($query, $params)
+    {
+        if (is_array($params->roles) and !empty($params->roles)) {
+            $query->whereIn('role', $params->roles);
+        }
+
+        return $query;
+    }
 }

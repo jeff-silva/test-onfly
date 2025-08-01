@@ -20,8 +20,12 @@ class AppUserControllerTest extends TestCase
     {
         $admin = AppUser::find(1);
         AppUser::factory()->count(3)->create();
+
         $response = $this->actingAs($admin, 'sanctum')->getJson('/api/app_user');
         $response->assertStatus(200)->assertJsonCount(5, 'data');
+
+        $response = $this->actingAs($admin, 'sanctum')->getJson('/api/app_user?roles[]=admin');
+        $response->assertStatus(200)->assertJsonCount(1, 'data');
     }
 
     public function test_show()
