@@ -10,9 +10,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AppUserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return AppUser::all();
+        return AppUser::searchPaginate($request->all());
     }
 
     public function store(AppUserStoreRequest $request)
