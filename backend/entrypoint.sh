@@ -5,6 +5,7 @@ chmod 0777 -R /app
 
 if [ ! -f "/app/.env" ]; then
   cp "/app/.env.example" "/app/.env"
+  cp "/app/.env.example" "/app/.env.testing"
 fi
 
 if ! grep -q "^APP_KEY=." /app/.env; then
