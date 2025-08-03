@@ -60,10 +60,12 @@ class TripRequestTest extends TestCase
     {
         $admin = AppUser::find(1);
         $entity = TripRequest::factory()->create();
-        $data = ['name' => 'Updated Name'];
+        $data = $entity->toArray();
+        unset($data['id']);
+        $data['name'] = 'Updated';
         $response = $this->actingAs($admin, 'sanctum')->putJson("/api/trip_request/{$entity->id}", $data);
-        $response->assertStatus(200)->assertJsonFragment(['name' => 'Updated Name']);
-        $this->assertDatabaseHas('trip_request', array_merge(['id' => $entity->id], $data));
+        $response->assertStatus(200)->assertJsonFragment(['name' => 'Updated']);
+        $this->assertDatabaseHas('trip_request', ['id' => $entity->id]);
     }
 
     public function test_destroy()
