@@ -17,7 +17,7 @@ class AppNotificationTest extends TestCase
         $this->seed();
     }
 
-    public function test_unlogged()
+    public function test_cant_see_data_without_token()
     {
         $response = $this->getJson('/api/app_notification');
         $response->assertStatus(401);
