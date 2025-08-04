@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\ModelSearchTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AppNotification extends Model
 {
@@ -17,4 +18,12 @@ class AppNotification extends Model
         'subject',
         'body',
     ];
+
+    /**
+     * Get the user that owns the notification.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(AppUser::class, 'user_id');
+    }
 }
