@@ -53,7 +53,7 @@ trip_request {
   int id
   int user_id FK
   string name
-  json destination
+  string destination
   string departure_date
   string return_date
   string status
@@ -63,6 +63,19 @@ app_user ||--o{ app_notification : "has many"
 app_user ||--o{ trip_request : "has many"
 
 ```
+
+## Observações de Modelagem
+
+- Utilizei string em vez de enums por acreditar que seria uma solução de manutenção mais simples, por não necessitar escrever uma nova migration.
+
+## Problemas Conhecidos
+
+Tenho ciência que alguns detalhes da estrutura do sistema são problemáticos, mas levei em consideração que pelo curto prazo de tempo, serão analisados apenas os requisitos técnicos básicos. Segue alguns problemas que tenho conciência que deveriam ter uma solução mais robusta para uma aplicação real:
+
+- Campo `trip_request.destination` é uma string.
+- Não foram aplicadas validações no frontend.
+- Os dados não estão passando por tratamento antes de salvar (remoção de pontos, espaços, conversão para maiúsculo, etc);
+- Validações no backend não foram traduzidas;
 
 ## Desafio
 
