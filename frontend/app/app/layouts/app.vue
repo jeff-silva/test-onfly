@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHr lpR lFr">
-    <q-header class="bg-primary text-white">
+    <q-header class="bg-grey-10 text-white">
       <q-toolbar>
         <q-btn
           dense
@@ -10,12 +10,12 @@
           @click="drawerLeft.toggle()"
         />
 
-        <q-toolbar-title>
+        <!-- <q-toolbar-title>
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
           </q-avatar>
           Title
-        </q-toolbar-title>
+        </q-toolbar-title> -->
 
         <!-- <q-btn
           dense
@@ -38,6 +38,7 @@
             clickable
             v-bind="o.linkBind"
             tag="a"
+            class="text-white"
           >
             <q-item-section
               v-if="o.icon"
@@ -48,7 +49,10 @@
 
             <q-item-section>
               <q-item-label>{{ o.title }}</q-item-label>
-              <q-item-label caption>
+              <q-item-label
+                caption
+                class="text-white"
+              >
                 {{ o.caption }}
               </q-item-label>
             </q-item-section>
@@ -66,7 +70,9 @@
     </q-drawer>
 
     <q-page-container>
-      <slot />
+      <div class="q-pa-md">
+        <slot />
+      </div>
     </q-page-container>
   </q-layout>
 </template>
