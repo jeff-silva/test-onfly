@@ -20,9 +20,18 @@ export default () => {
         setTimeout(() => app.init(), 1000);
       },
 
+      async authVerify() {
+        if (app.route.path.startsWith("/auth")) return;
+        if (!app.user) app.router.push("/auth");
+      },
+
+      route: useRoute(),
+      router: useRouter(),
+
       async init() {
         await app.load.submit();
         app.ready = true;
+        await app.authVerify();
       },
     });
   })();
