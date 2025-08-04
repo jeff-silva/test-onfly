@@ -75,6 +75,9 @@
               {
                 icon: 'edit',
                 to: `/trip_request/${props.row.id}`,
+                showIf() {
+                  return app.user.role == 'admin';
+                },
               },
               {
                 icon: 'check',
@@ -113,6 +116,7 @@
 
 <script setup>
 const f = useFormat();
+const app = useApp();
 
 const search = useAxios({
   method: "get",
