@@ -5,7 +5,7 @@
         anchor="center left"
         self="center right"
       >
-        <div style="display: flex; align-items: center; gap: 10px">
+        <div style="display: flex; align-items: center">
           <template v-for="o in actions">
             <q-btn v-bind="o" />
           </template>
@@ -21,8 +21,10 @@ const props = defineProps({
 });
 
 const actions = computed(() => {
-  return props.actions.map((act) => {
-    return { label: "", ...act };
-  });
+  return props.actions
+    .map((act) => {
+      return { label: "", showIf: () => true, ...act };
+    })
+    .filter((act) => act.showIf());
 });
 </script>

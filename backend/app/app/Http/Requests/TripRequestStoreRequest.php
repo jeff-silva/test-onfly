@@ -32,7 +32,6 @@ class TripRequestStoreRequest extends FormRequest
             'destination' => ['required'],
             'departure_date' => ['required', 'date'],
             'return_date' => ['required', 'date', 'after:departure_date'],
-            'status' => ['string', 'in:pending,approved,rejected'],
             'user_id' => ['required', 'exists:app_user,id'],
         ];
     }

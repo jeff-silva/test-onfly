@@ -43,4 +43,12 @@ class TripRequestController extends Controller
         $entity->delete();
         return compact(['entity']);
     }
+
+    public function approve($id)
+    {
+        $entity = TripRequest::find($id);
+        $entity->status = 'approved';
+        $entity->save();
+        return compact(['entity']);
+    }
 }
