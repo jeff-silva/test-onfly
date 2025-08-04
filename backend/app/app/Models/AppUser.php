@@ -9,11 +9,12 @@ use App\Traits\ModelSearchTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class AppUser extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, ModelSearchTrait;
+    use HasFactory, Notifiable, ModelSearchTrait, HasApiTokens;
 
     protected $table = 'app_user';
 
