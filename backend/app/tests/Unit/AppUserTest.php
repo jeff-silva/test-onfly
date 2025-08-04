@@ -16,6 +16,24 @@ class AppUserTest extends TestCase
         $this->seed();
     }
 
+    public function test_cant_see_data_without_token()
+    {
+        $response = $this->getJson('/api/app_user');
+        $response->assertStatus(401);
+
+        $response = $this->postJson('/api/app_user', []);
+        $response->assertStatus(401);
+
+        $response = $this->putJson('/api/app_user/1', []);
+        $response->assertStatus(401);
+
+        $response = $this->getJson('/api/app_user/1', []);
+        $response->assertStatus(401);
+
+        $response = $this->deleteJson('/api/app_user/1', []);
+        $response->assertStatus(401);
+    }
+
     public function test_index()
     {
         $admin = AppUser::find(1);

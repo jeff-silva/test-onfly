@@ -30,7 +30,7 @@ class TripRequestStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'destination' => ['required'],
-            'departure_date' => ['required', 'date'],
+            'departure_date' => ['required', 'date', 'after_or_equal:today'],
             'return_date' => ['required', 'date', 'after:departure_date'],
             'user_id' => ['required', 'exists:app_user,id'],
         ];
