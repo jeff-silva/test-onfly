@@ -93,7 +93,7 @@ return [
     'passwords' => [
         'app_user' => [
             'provider' => 'app_user',
-            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'app_password_reset_tokens'),
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'app_password_reset_token'),
             'expire' => 60,
             'throttle' => 60,
         ],

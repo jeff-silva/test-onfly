@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('app_password_reset_tokens', function (Blueprint $table) {
+        Schema::create('app_password_reset_token', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
@@ -44,7 +44,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('app_user');
-        Schema::dropIfExists('app_password_reset_tokens');
+        Schema::dropIfExists('app_password_reset_token');
         Schema::dropIfExists('app_sessions');
     }
 };
