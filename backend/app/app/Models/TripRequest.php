@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Enums\AppUserRole;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Traits\ModelSearchTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 class TripRequest extends Model
 {
@@ -27,6 +28,14 @@ class TripRequest extends Model
         'return_date' => 'datetime',
     ];
 
+    /**
+     * Get the user that owns the trip request.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(AppUser::class, 'user_id');
+    }
+
     public function searchParams()
     {
         return [
@@ -46,7 +55,7 @@ class TripRequest extends Model
             $query->where('user_id', $params->user_id);
         }
 
-        Log::info($params);
+        // Log::info($params);
         return $query;
     }
 }

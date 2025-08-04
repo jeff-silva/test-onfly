@@ -14,6 +14,11 @@ Basta executar o comando acima somente. Todo o necessário para a aplicação fu
 | Frontend    | http://localhost:3000 |
 | Cloudbeaver | http://localhost:8978 |
 
+## Testes Unitários
+
+- Inicie a aplicação com o comando `yarn dev`;
+- Execute os testes com o comando `yarn test`.
+
 ## Tasks
 
 - Backend

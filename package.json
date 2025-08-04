@@ -6,6 +6,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "docker compose up --build --force-recreate --remove-orphans",
-    "test": "docker compose run backend sh -c \"php artisan config:clear && php artisan test\""
+    "test": "docker compose exec -w /app backend sh -c \"php artisan config:clear && php artisan test\""
   }
 }
