@@ -14,6 +14,12 @@ class TripRequestStoreRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation()
+    {
+        $user = $this->user('sanctum');
+        $this->merge(['user_id' => $user->id]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,9 +29,7 @@ class TripRequestStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'destination' => ['required', 'array'],
-            'destination.lat' => ['required', 'numeric'],
-            'destination.lng' => ['required', 'numeric'],
+            'destination' => ['required'],
             'departure_date' => ['required', 'date'],
             'return_date' => ['required', 'date', 'after:departure_date'],
             'status' => ['string', 'in:pending,approved,rejected'],

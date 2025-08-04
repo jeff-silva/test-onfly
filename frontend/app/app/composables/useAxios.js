@@ -62,6 +62,14 @@ export default (opts = {}) => {
       return r?.error?.response?.errors[name] || [];
     },
 
+    fieldError(name) {
+      if (!r.error) return null;
+      if (!r.error.response) return null;
+      if (!r.error.response.errors) return null;
+      const errors = r?.error?.response?.errors[name] || [];
+      return errors.at(0) || null;
+    },
+
     submit() {
       return new Promise(async (resolve, reject) => {
         r.axiosOptions();

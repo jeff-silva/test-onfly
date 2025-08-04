@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('trip_request', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->json('destination')->nullable();
+            $table->string('destination')->nullable();
             $table->string('departure_date')->nullable();
             $table->string('return_date')->nullable();
             $table->string('status')->default('pending');

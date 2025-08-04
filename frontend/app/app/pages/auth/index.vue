@@ -10,6 +10,8 @@
           <q-input
             v-model="login.data.password"
             label="Senha"
+            type="password"
+            autocomplete="new-password"
           />
           <q-separator dark />
 
@@ -19,6 +21,20 @@
               :loading="login.busy"
             >
               Login
+            </q-btn>
+          </q-card-actions>
+          <q-card-actions vertical>
+            <q-btn
+              class="text-white"
+              @click="login.loginAs('main@grr.la')"
+            >
+              Logar como Administrador
+            </q-btn>
+            <q-btn
+              class="text-white"
+              @click="login.loginAs('user@grr.la')"
+            >
+              Logar como Usuário Comum
             </q-btn>
           </q-card-actions>
         </q-form>
@@ -34,10 +50,15 @@ const route = useRoute();
 const login = useAxios({
   method: "post",
   url: "/api/auth/login",
-  data: { email: "main@grr.la", password: "main@grr.la" },
+  data: { email: "", password: "" },
   async onSuccess() {
     await app.setToken(login.response.accessToken);
     location.href = route.query.redirect || "/";
+  },
+  loginAs(email) {
+    login.data.email = email;
+    login.data.password = email;
+    login.submit();
   },
 });
 </script>
