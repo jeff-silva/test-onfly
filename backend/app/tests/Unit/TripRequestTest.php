@@ -17,29 +17,47 @@ class TripRequestTest extends TestCase
         $this->seed();
     }
 
+    public function test_unlogged()
+    {
+        $response = $this->getJson('/api/trip_request');
+        $response->assertStatus(401);
+
+        $response = $this->postJson('/api/trip_request', []);
+        $response->assertStatus(401);
+
+        $response = $this->putJson('/api/trip_request/1', []);
+        $response->assertStatus(401);
+
+        $response = $this->getJson('/api/trip_request/1', []);
+        $response->assertStatus(401);
+
+        $response = $this->deleteJson('/api/trip_request/1', []);
+        $response->assertStatus(401);
+    }
+
     public function test_index()
     {
-        $admin = AppUser::find(1);
+        $auth = $this->loginAs('main@grr.la');
         TripRequest::factory()->count(3)->create();
 
-        $response = $this->actingAs($admin, 'sanctum')->getJson('/api/trip_request');
+        $response = $this->withToken($auth->token)->getJson('/api/trip_request');
         $response->assertStatus(200)->assertJsonCount(3, 'data');
     }
 
     public function test_show()
     {
-        $admin = AppUser::find(1);
+        $auth = $this->loginAs('main@grr.la');
         $entity = TripRequest::factory()->create();
-        $response = $this->actingAs($admin, 'sanctum')->getJson("/api/trip_request/{$entity->id}");
+        $response = $this->withToken($auth->token)->getJson("/api/trip_request/{$entity->id}");
         $response->assertStatus(200)->assertJsonStructure(['entity' => ['id']]);
     }
 
     public function test_store()
     {
-        $admin = AppUser::find(1);
+        $auth = $this->loginAs('main@grr.la');
         $data = TripRequest::factory()->make()->toArray();
 
-        $response = $this->actingAs($admin, 'sanctum')->postJson('/api/trip_request', $data);
+        $response = $this->withToken($auth->token)->postJson('/api/trip_request', $data);
         $response->assertStatus(200)
             ->assertJsonStructure(['entity' => ['id']]);
 
@@ -50,29 +68,29 @@ class TripRequestTest extends TestCase
 
     public function test_store_validation()
     {
-        $admin = AppUser::find(1);
+        $auth = $this->loginAs('main@grr.la');
         $data = ['name' => ''];
-        $response = $this->actingAs($admin, 'sanctum')->postJson('/api/trip_request', $data);
+        $response = $this->withToken($auth->token)->postJson('/api/trip_request', $data);
         $response->assertStatus(422)->assertJsonValidationErrors(['name']);
     }
 
     public function test_update()
     {
-        $admin = AppUser::find(1);
+        $auth = $this->loginAs('main@grr.la');
         $entity = TripRequest::factory()->create();
         $data = $entity->toArray();
         unset($data['id']);
         $data['name'] = 'Updated';
-        $response = $this->actingAs($admin, 'sanctum')->putJson("/api/trip_request/{$entity->id}", $data);
+        $response = $this->withToken($auth->token)->putJson("/api/trip_request/{$entity->id}", $data);
         $response->assertStatus(200)->assertJsonFragment(['name' => 'Updated']);
         $this->assertDatabaseHas('trip_request', ['id' => $entity->id]);
     }
 
     public function test_destroy()
     {
-        $admin = AppUser::find(1);
+        $auth = $this->loginAs('main@grr.la');
         $delete = TripRequest::factory()->create();
-        $response = $this->actingAs($admin, 'sanctum')->deleteJson("/api/trip_request/{$delete->id}");
+        $response = $this->withToken($auth->token)->deleteJson("/api/trip_request/{$delete->id}");
         $response->assertStatus(200)->assertJsonStructure(['entity' => ['id']]);
         $this->assertDatabaseMissing('trip_request', ['id' => $delete->id]);
     }
