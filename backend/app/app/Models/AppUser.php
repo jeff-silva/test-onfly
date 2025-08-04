@@ -4,15 +4,17 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Enums\UserRole;
+use App\Enums\AppUserRole;
+use App\Traits\ModelSearchTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class AppUser extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, ModelSearchTrait, HasApiTokens;
 
     protected $table = 'app_user';
 
@@ -48,7 +50,23 @@ class AppUser extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'role' => UserRole::class,
+            'role' => AppUserRole::class,
         ];
+    }
+
+    public function searchParams()
+    {
+        return [
+            'roles' => [],
+        ];
+    }
+
+    public function searchQuery($query, $params)
+    {
+        if (is_array($params->roles) and !empty($params->roles)) {
+            $query->whereIn('role', $params->roles);
+        }
+
+        return $query;
     }
 }
