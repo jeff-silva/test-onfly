@@ -1,5 +1,16 @@
 <template>
   <nuxt-layout name="app">
+    <q-form-actions
+      :actions="[
+        {
+          label: 'Novo',
+          to: '/trip_request',
+          color: 'primary',
+        },
+      ]"
+    />
+    <br />
+
     <q-table
       :pagination="{
         page: search.params.page,
@@ -75,9 +86,6 @@
               {
                 icon: 'edit',
                 to: `/trip_request/${props.row.id}`,
-                showIf() {
-                  return app.user.role == 'admin';
-                },
               },
               {
                 icon: 'check',
@@ -86,7 +94,9 @@
                   approve.approve(props.row);
                 },
                 showIf() {
-                  return props.row.status == 'pending';
+                  return (
+                    app.user.role == 'admin' && props.row.status == 'pending'
+                  );
                 },
               },
             ]"
@@ -94,23 +104,6 @@
         </q-td>
       </template>
     </q-table>
-
-    <q-page-sticky
-      position="bottom-right"
-      class="q-pa-md"
-    >
-      <q-fab
-        color="primary"
-        icon="keyboard_arrow_up"
-        direction="up"
-      >
-        <q-fab-action
-          color="primary"
-          icon="add"
-          to="/trip_request/new"
-        />
-      </q-fab>
-    </q-page-sticky>
   </nuxt-layout>
 </template>
 
