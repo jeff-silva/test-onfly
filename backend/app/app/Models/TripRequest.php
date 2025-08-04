@@ -17,7 +17,6 @@ class TripRequest extends Model
         'destination',
         'departure_date',
         'return_date',
-        'status',
         'user_id',
     ];
 

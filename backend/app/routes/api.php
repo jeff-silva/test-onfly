@@ -12,10 +12,12 @@ Route::get('app/load', [AppController::class, 'load'])->name('app.load');
 Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-  Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
   Route::apiResources([
     'app_user' => AppUserController::class,
     'trip_request' => TripRequestController::class,
     'app_notification' => AppNotificationController::class,
   ]);
+
+  Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+  Route::post('trip_request/{id}/approve', [TripRequestController::class, 'approve'])->name('trip_request.approve');
 });
