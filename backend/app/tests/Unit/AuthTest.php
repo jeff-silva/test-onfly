@@ -20,14 +20,9 @@ class AuthTest extends TestCase
 
     public function test_login_logout()
     {
-        $entity = AppUser::factory()->create();
-        $data = ['email' => $entity->email, 'password' => $entity->email];
-
-        $response = $this->postJson('/api/auth/login', $data);
-        $response->assertStatus(200)->assertJsonStructure(['accessToken']);
-
-        $accessToken = $response->json('accessToken');
-        $response = $this->withToken($accessToken)->postJson('/api/auth/logout');
+        $auth = $this->loginAs(null);
+        $auth->response->assertStatus(200)->assertJsonStructure(['accessToken']);
+        $response = $this->withToken($auth->token)->postJson('/api/auth/logout');
         $response->assertStatus(200)->assertJsonStructure(['message']);
     }
 }
