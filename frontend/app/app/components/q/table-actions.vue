@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="actions.length > 0">
     <q-btn icon="menu">
       <q-menu
         anchor="center left"
