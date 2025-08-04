@@ -22,7 +22,6 @@ class TripRequest extends Model
     ];
 
     protected $casts = [
-        'destination' => 'json',
         'departure_date' => 'datetime',
         'return_date' => 'datetime',
     ];

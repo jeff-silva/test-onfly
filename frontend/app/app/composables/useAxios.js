@@ -42,7 +42,7 @@ export default (opts = {}) => {
 
       if (_opts.url.startsWith("/api")) {
         _opts.url = `http://localhost:8000${_opts.url}`;
-        const access_token = localStorage.getItem("access_token");
+        const access_token = localStorage.getItem("access_token") || "";
         if (access_token) {
           _opts.headers["Authorization"] = `Bearer ${access_token}`;
         }
@@ -60,6 +60,14 @@ export default (opts = {}) => {
       if (!r.error.response) return [];
       if (!r.error.response.errors) return [];
       return r?.error?.response?.errors[name] || [];
+    },
+
+    fieldError(name) {
+      if (!r.error) return null;
+      if (!r.error.response) return null;
+      if (!r.error.response.errors) return null;
+      const errors = r?.error?.response?.errors[name] || [];
+      return errors.at(0) || null;
     },
 
     submit() {

@@ -15,14 +15,36 @@ export default () => {
 
       user: null,
 
-      logout() {
-        localStorage.removeItem("access_token");
-        setTimeout(() => app.init(), 1000);
+      logout: useAxios({
+        method: "post",
+        url: "/api/auth/logout",
+        async onSuccess() {
+          await app.setToken("", false);
+          location.href = `/auth?redirect=${app.route.fullPath}`;
+        },
+      }),
+
+      async setToken(token, init = true) {
+        localStorage.setItem("access_token", token);
+        if (init) await app.init();
       },
+
+      getToken() {
+        return localStorage.getItem("access_token") || "";
+      },
+
+      async authVerify() {
+        if (app.route.path.startsWith("/auth")) return;
+        if (!app.user) app.router.push("/auth");
+      },
+
+      route: useRoute(),
+      router: useRouter(),
 
       async init() {
         await app.load.submit();
         app.ready = true;
+        await app.authVerify();
       },
     });
   })();

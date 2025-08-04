@@ -32,6 +32,12 @@
       v-model="drawerLeft.show"
       side="left"
     >
+      <div
+        v-if="app.user"
+        class="q-pa-md text-center text-h6"
+      >
+        {{ app.user.name }}
+      </div>
       <q-list>
         <template v-for="o in drawerLeft.navItems">
           <q-item
@@ -78,93 +84,138 @@
 </template>
 
 <script setup>
+const app = useApp();
+
 const drawerLeft = reactive({
   show: true,
   toggle(value = null) {
     drawerLeft.show = value === null ? !drawerLeft.show : value;
   },
-  navItems: [
-    {
-      title: "Docs",
-      caption: "quasar.dev",
-      icon: "school",
+  navItems: computed(() => {
+    let items = [];
+
+    items.push({
+      title: "Início",
+      caption: "Tela inicial",
+      icon: "dashboard",
       linkBind: {
         to: "/",
       },
-    },
-    {
-      title: "Docs",
-      caption: "quasar.dev",
-      icon: "school",
-      linkBind: {
-        to: "?page=docs",
-      },
-    },
+    });
 
-    {
-      title: "Docs",
-      caption: "quasar.dev",
-      icon: "school",
+    items.push({
+      title: "Viagens",
+      caption: "Gerenciar viagens de usuários",
+      icon: "flight",
       linkBind: {
-        href: "https://quasar.dev",
-        target: "_blank",
+        to: "/trip_request",
       },
-    },
-    {
-      title: "Github",
-      caption: "github.com/quasarframework",
-      icon: "code",
+    });
+
+    items.push({
+      title: "Logout",
+      caption: "Sair",
+      icon: "logout",
       linkBind: {
-        href: "https://github.com/quasarframework",
-        target: "_blank",
+        async onClick() {
+          await app.logout.submit();
+        },
       },
-    },
-    {
-      title: "Discord Chat Channel",
-      caption: "chat.quasar.dev",
-      icon: "chat",
-      linkBind: {
-        href: "https://chat.quasar.dev",
-        target: "_blank",
-      },
-    },
-    {
-      title: "Forum",
-      caption: "forum.quasar.dev",
-      icon: "record_voice_over",
-      linkBind: {
-        href: "https://forum.quasar.dev",
-        target: "_blank",
-      },
-    },
-    {
-      title: "Twitter",
-      caption: "@quasarframework",
-      icon: "rss_feed",
-      linkBind: {
-        href: "https://twitter.quasar.dev",
-        target: "_blank",
-      },
-    },
-    {
-      title: "Facebook",
-      caption: "@QuasarFramework",
-      icon: "public",
-      linkBind: {
-        href: "https://facebook.quasar.dev",
-        target: "_blank",
-      },
-    },
-    {
-      title: "Quasar Awesome",
-      caption: "Community Quasar projects",
-      icon: "favorite",
-      linkBind: {
-        href: "https://awesome.quasar.dev",
-        target: "_blank",
-      },
-    },
-  ],
+    });
+
+    return items;
+  }),
+  // navItems: [
+  //   {
+  //     title: "Docs",
+  //     caption: "quasar.dev",
+  //     icon: "school",
+  //     linkBind: {
+  //       to: "/",
+  //     },
+  //   },
+  //   {
+  //     title: "Docs",
+  //     caption: "quasar.dev",
+  //     icon: "school",
+  //     linkBind: {
+  //       to: "?page=docs",
+  //     },
+  //   },
+  //   {
+  //     title: "Logout",
+  //     caption: "Sair",
+  //     icon: "school",
+  //     linkBind: {
+  //       async onClick() {
+  //         await app.logout.submit();
+  //       },
+  //     },
+  //   },
+  //   {
+  //     title: "Docs",
+  //     caption: "quasar.dev",
+  //     icon: "school",
+  //     linkBind: {
+  //       href: "https://quasar.dev",
+  //       target: "_blank",
+  //     },
+  //   },
+  //   {
+  //     title: "Github",
+  //     caption: "github.com/quasarframework",
+  //     icon: "code",
+  //     linkBind: {
+  //       href: "https://github.com/quasarframework",
+  //       target: "_blank",
+  //     },
+  //   },
+  //   {
+  //     title: "Discord Chat Channel",
+  //     caption: "chat.quasar.dev",
+  //     icon: "chat",
+  //     linkBind: {
+  //       href: "https://chat.quasar.dev",
+  //       target: "_blank",
+  //     },
+  //   },
+  //   {
+  //     title: "Forum",
+  //     caption: "forum.quasar.dev",
+  //     icon: "record_voice_over",
+  //     linkBind: {
+  //       href: "https://forum.quasar.dev",
+  //       target: "_blank",
+  //     },
+  //   },
+  //   {
+  //     title: "Twitter",
+  //     caption: "@quasarframework",
+  //     icon: "rss_feed",
+  //     linkBind: {
+  //       href: "https://twitter.quasar.dev",
+  //       target: "_blank",
+  //     },
+  //   },
+  //   {
+  //     title: "Facebook",
+  //     caption: "@QuasarFramework",
+  //     icon: "public",
+  //     linkBind: {
+  //       href: "https://facebook.quasar.dev",
+  //       target: "_blank",
+  //     },
+  //   },
+  //   {
+  //     title: "Quasar Awesome",
+  //     caption: "Community Quasar projects",
+  //     icon: "favorite",
+  //     linkBind: {
+  //       href: "https://awesome.quasar.dev",
+  //       target: "_blank",
+  //     },
+  //   },
+  // ],
 });
 
 const drawerRight = reactive({
