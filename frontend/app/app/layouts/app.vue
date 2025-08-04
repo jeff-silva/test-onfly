@@ -77,13 +77,29 @@
 
     <q-page-container>
       <div class="q-pa-md">
-        <slot />
+        <div v-if="!canSee">
+          <q-card class="bg-negative">
+            <q-card-section>
+              Você não tem permissão para visualizar esta tela.
+            </q-card-section>
+          </q-card>
+        </div>
+        <slot v-if="canSee" />
       </div>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
+const props = defineProps({
+  roles: { type: Array, default: () => [] },
+});
+
+const canSee = computed(() => {
+  if (props.roles.length == 0) return true;
+  return props.roles.includes(app.user.role);
+});
+
 const app = useApp();
 
 const drawerLeft = reactive({

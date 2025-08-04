@@ -1,5 +1,8 @@
 <template>
-  <nuxt-layout name="app">
+  <nuxt-layout
+    name="app"
+    :roles="['admin']"
+  >
     <q-form @submit.prevent="save.submit()">
       <q-input
         v-model="save.data.name"
