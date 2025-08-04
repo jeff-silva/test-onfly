@@ -32,6 +32,12 @@
       v-model="drawerLeft.show"
       side="left"
     >
+      <div
+        v-if="app.user"
+        class="q-pa-md text-center text-h6"
+      >
+        Bem vindo {{ app.user.name }}
+      </div>
       <q-list>
         <template v-for="o in drawerLeft.navItems">
           <q-item
@@ -78,6 +84,8 @@
 </template>
 
 <script setup>
+const app = useApp();
+
 const drawerLeft = reactive({
   show: true,
   toggle(value = null) {
@@ -100,7 +108,16 @@ const drawerLeft = reactive({
         to: "?page=docs",
       },
     },
-
+    {
+      title: "Logout",
+      caption: "Sair",
+      icon: "school",
+      linkBind: {
+        async onClick() {
+          await app.logout.submit();
+        },
+      },
+    },
     {
       title: "Docs",
       caption: "quasar.dev",

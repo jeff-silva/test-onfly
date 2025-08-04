@@ -11,7 +11,6 @@ class AppController extends Controller
     {
         $scope = new Fluent();
         $scope->user = $request->user('sanctum');
-        $scope->test = 123;
         return $scope;
     }
 }

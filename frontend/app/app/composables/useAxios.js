@@ -42,7 +42,7 @@ export default (opts = {}) => {
 
       if (_opts.url.startsWith("/api")) {
         _opts.url = `http://localhost:8000${_opts.url}`;
-        const access_token = localStorage.getItem("access_token");
+        const access_token = localStorage.getItem("access_token") || "";
         if (access_token) {
           _opts.headers["Authorization"] = `Bearer ${access_token}`;
         }

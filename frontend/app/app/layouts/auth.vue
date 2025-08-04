@@ -19,9 +19,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 25px;
       "
     >
-      <slot />
+      <div
+        style="width: 100%"
+        class="q-pa-md"
+      >
+        <slot />
+      </div>
     </div>
   </div>
 </template>
