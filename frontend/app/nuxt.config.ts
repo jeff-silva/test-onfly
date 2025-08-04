@@ -2,6 +2,11 @@
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  modules: ["@nuxt/icon", "@nuxt/scripts"],
   ssr: false,
+  modules: [
+    ["@nuxt/icon", {}],
+    ["@nuxt/scripts", {}],
+    ["nuxt-quasar-ui", {}],
+    "@pinia/nuxt",
+  ],
 });
