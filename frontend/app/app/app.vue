@@ -1,6 +1,9 @@
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+  <nuxt-page />
 </template>
+
+<script setup>
+const app = useApp();
+const $q = useQuasar();
+$q.dark.set(true);
+</script>
