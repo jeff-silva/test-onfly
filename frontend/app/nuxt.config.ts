@@ -7,6 +7,6 @@ export default defineNuxtConfig({
     ["@nuxt/icon", {}],
     ["@nuxt/scripts", {}],
     ["nuxt-quasar-ui", {}],
-    "@pinia/nuxt",
+    ["@pinia/nuxt", {}],
   ],
 });
