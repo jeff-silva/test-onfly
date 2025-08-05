@@ -92,6 +92,8 @@
 </template>
 
 <script setup>
+const $q = useQuasar();
+
 const f = useFormat();
 const route = useRoute();
 const router = useRouter();
@@ -111,6 +113,12 @@ const save = useAxios({
   },
   onSuccess() {
     router.push(`/trip_request/${save.response.entity.id}`);
+    $q.notify({
+      icon: "announcement",
+      color: "positive",
+      textColor: "white",
+      message: "Dados salvos",
+    });
   },
 });
 
