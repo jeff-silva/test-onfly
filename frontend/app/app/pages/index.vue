@@ -1,6 +1,6 @@
 <template>
   <nuxt-layout name="app">
-    <div>Bem Vindo {{ app.user.name }}</div>
+    <div v-if="app.user">Bem Vindo {{ app.user.name }}</div>
   </nuxt-layout>
 </template>
 

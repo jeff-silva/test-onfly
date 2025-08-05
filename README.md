@@ -16,22 +16,22 @@ Basta executar o comando acima somente. Todo o necessário para a aplicação fu
 
 ## Testes Unitários
 
-- Inicie a aplicação com o comando `yarn dev`;
+- Caso ainda não tenha iniciado a aplicação, execute `yarn dev`;
 - Execute os testes com o comando `yarn test`.
 
 ## Tasks
 
 - Backend
-  - ✅ ~~Criar o repositório~~
-  - ✅ ~~Preparar ambiente Docker~~
-  - ✅ ~~Usuários (id, name, email, password, role)~~
-  - ✅ ~~Sistema de autenticação~~
-  - 🟥 Notificação (id, name, message, to_user_id)
-  - 🟥 Pedido de viagem (id, name, destination, departure_date, return_date, status)
+  - ✅ Criar o repositório
+  - ✅ Preparar ambiente Docker
+  - ✅ Usuários (id, name, email, password, role)
+  - ✅ Sistema de autenticação
+  - ✅ Notificação (id, name, message, to_user_id)
+  - ✅ Pedido de viagem (id, name, destination, departure_date, return_date, status)
 - Frontend
   - ✅ Autenticação
   - ✅ Dashboard
-  - 🟥 Formulário de pedidos
+  - ✅ Formulário de pedidos
   - ✅ Área administrativa para aprovação/cancelamento de pedidos
 
 ## Schema
@@ -68,10 +68,6 @@ app_user ||--o{ app_notification : "has many"
 app_user ||--o{ trip_request : "has many"
 
 ```
-
-## Observações de Modelagem
-
-- Utilizei string em vez de enums por acreditar que seria uma solução de manutenção mais simples, por não necessitar escrever uma nova migration.
 
 ## Problemas Conhecidos
 

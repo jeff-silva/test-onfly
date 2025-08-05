@@ -17,7 +17,7 @@ class TripRequestTest extends TestCase
         $this->seed();
     }
 
-    public function test_cant_see_data_without_token()
+    public function test_token_security()
     {
         $response = $this->getJson('/api/trip_request');
         $response->assertStatus(401);
@@ -93,5 +93,21 @@ class TripRequestTest extends TestCase
         $response = $this->withToken($auth->token)->deleteJson("/api/trip_request/{$delete->id}");
         $response->assertStatus(200)->assertJsonStructure(['entity' => ['id']]);
         $this->assertDatabaseMissing('trip_request', ['id' => $delete->id]);
+    }
+
+    public function test_approve()
+    {
+        $auth = $this->loginAs('main@grr.la');
+        $delete = TripRequest::factory()->create();
+        $response = $this->withToken($auth->token)->postJson("/api/trip_request/{$delete->id}/approve");
+        $response->assertStatus(200)->assertJsonStructure(['entity' => ['id']]);
+    }
+
+    public function test_reject()
+    {
+        $auth = $this->loginAs('main@grr.la');
+        $delete = TripRequest::factory()->create();
+        $response = $this->withToken($auth->token)->postJson("/api/trip_request/{$delete->id}/reject");
+        $response->assertStatus(200)->assertJsonStructure(['entity' => ['id']]);
     }
 }
