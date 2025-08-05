@@ -16,7 +16,7 @@ class AppUserTest extends TestCase
         $this->seed();
     }
 
-    public function test_cant_see_data_without_token()
+    public function test_token_security()
     {
         $response = $this->getJson('/api/app_user');
         $response->assertStatus(401);

@@ -17,7 +17,7 @@ class TripRequestTest extends TestCase
         $this->seed();
     }
 
-    public function test_cant_see_data_without_token()
+    public function test_token_security()
     {
         $response = $this->getJson('/api/trip_request');
         $response->assertStatus(401);
