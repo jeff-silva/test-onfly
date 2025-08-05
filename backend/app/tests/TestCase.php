@@ -8,6 +8,13 @@ use Illuminate\Support\Fluent;
 
 abstract class TestCase extends BaseTestCase
 {
+    /**
+     * Faz login como um usuário com o email definido (ou cria um usuário caso email seja null)
+     * Retorna objeto contendo:
+     * - response: Resposta da request de login
+     * - entity: usuário encontrado com o login
+     * - token: string do token de acesso
+     */
     public function loginAs($email)
     {
         $entity = AppUser::where(['email' => $email])->first();
