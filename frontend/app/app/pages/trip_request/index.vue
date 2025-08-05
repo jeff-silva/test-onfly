@@ -1,5 +1,16 @@
 <template>
   <nuxt-layout name="app">
+    <q-form-actions
+      :actions="[
+        {
+          label: 'Novo',
+          to: '/trip_request/new',
+          color: 'primary',
+        },
+      ]"
+    />
+    <br />
+
     <q-table
       :pagination="{
         page: search.params.page,
@@ -13,7 +24,6 @@
           search.params.page = props.pagination.page;
           search.params.per_page = props.pagination.rowsPerPage;
           search.submit();
-          console.log(props);
         }
       "
       :loading="search.busy"
@@ -75,9 +85,6 @@
               {
                 icon: 'edit',
                 to: `/trip_request/${props.row.id}`,
-                showIf() {
-                  return app.user.role == 'admin';
-                },
               },
               {
                 icon: 'check',
@@ -86,7 +93,21 @@
                   approve.approve(props.row);
                 },
                 showIf() {
-                  return props.row.status == 'pending';
+                  if (app.user.role != 'admin') return false;
+                  if (props.row.status != 'pending') return false;
+                  return true;
+                },
+              },
+              {
+                icon: 'block',
+                loading: approve.busy,
+                onClick() {
+                  approve.reject(props.row);
+                },
+                showIf() {
+                  if (app.user.role != 'admin') return false;
+                  if (props.row.status != 'pending') return false;
+                  return true;
                 },
               },
             ]"
@@ -94,23 +115,6 @@
         </q-td>
       </template>
     </q-table>
-
-    <q-page-sticky
-      position="bottom-right"
-      class="q-pa-md"
-    >
-      <q-fab
-        color="primary"
-        icon="keyboard_arrow_up"
-        direction="up"
-      >
-        <q-fab-action
-          color="primary"
-          icon="add"
-          to="/trip_request/new"
-        />
-      </q-fab>
-    </q-page-sticky>
   </nuxt-layout>
 </template>
 
@@ -129,6 +133,11 @@ const approve = useAxios({
   url: "/api/trip_request/:id/approve",
   async approve(item) {
     approve.url = `/api/trip_request/${item.id}/approve`;
+    await approve.submit();
+    await search.submit();
+  },
+  async reject(item) {
+    approve.url = `/api/trip_request/${item.id}/reject`;
     await approve.submit();
     await search.submit();
   },

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ModelEventTrait;
 use App\Traits\ModelSearchTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class AppNotification extends Model
 {
     /** @use HasFactory<\Database\Factories\AppNotificationFactory> */
-    use HasFactory, ModelSearchTrait;
+    use HasFactory, ModelSearchTrait, ModelEventTrait;
 
     protected $table = 'app_notification';
     protected $fillable = [
