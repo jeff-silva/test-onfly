@@ -10,20 +10,23 @@
           @click="drawerLeft.toggle()"
         />
 
-        <!-- <q-toolbar-title>
-          <q-avatar>
+        <q-toolbar-title>
+          <!-- <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
           </q-avatar>
-          Title
-        </q-toolbar-title> -->
+          Title -->
+        </q-toolbar-title>
 
-        <!-- <q-btn
-          dense
+        <q-btn
           flat
-          round
-          icon="menu"
+          dense
           @click="drawerRight.toggle()"
-        /> -->
+        >
+          <q-avatar>
+            <q-icon name="menu" />
+            <q-badge floating>{{ app.notifications.length }}</q-badge>
+          </q-avatar>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -72,7 +75,16 @@
       side="right"
       behavior="mobile"
     >
-      <!-- drawer content -->
+      <q-list>
+        <template v-for="o in app.notifications">
+          <q-item>
+            <q-item-section>
+              <q-item-label>{{ o.subject }}</q-item-label>
+              <q-item-label caption>{{ o.body }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-list>
     </q-drawer>
 
     <q-page-container>

@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\AppUserRole;
+use App\Traits\ModelEventTrait;
 use App\Traits\ModelSearchTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 class AppUser extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, ModelSearchTrait, HasApiTokens;
+    use HasFactory, Notifiable, ModelSearchTrait, HasApiTokens, ModelEventTrait;
 
     protected $table = 'app_user';
 
@@ -66,7 +67,7 @@ class AppUser extends Authenticatable
     /**
      * Get the notifications for the user.
      */
-    public function appNotifications(): HasMany
+    public function notifications(): HasMany
     {
         return $this->hasMany(AppNotification::class, 'user_id');
     }

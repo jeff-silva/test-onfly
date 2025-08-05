@@ -1,20 +1,19 @@
 <template>
-  <nuxt-layout
-    name="app"
-    :roles="['admin']"
-  >
+  <nuxt-layout name="app">
     <q-form @submit.prevent="save.submit()">
       <q-input
         v-model="save.data.name"
         label="Nome do solicitante"
         :error-message="save.fieldError('name')"
         :error="!!save.fieldError('name')"
+        :disable="!!save.data.id"
       />
       <q-input
         v-model="save.data.destination"
         label="Destino"
         :error-message="save.fieldError('destination')"
         :error="!!save.fieldError('destination')"
+        :disable="!!save.data.id"
       />
 
       <q-input
@@ -23,6 +22,7 @@
         readonly
         :error-message="save.fieldError('departure_date')"
         :error="!!save.fieldError('departure_date')"
+        :disable="!!save.data.id"
       >
         <template #append>
           <q-icon
@@ -49,6 +49,7 @@
         readonly
         :error-message="save.fieldError('return_date')"
         :error="!!save.fieldError('return_date')"
+        :disable="!!save.data.id"
       >
         <template #append>
           <q-icon
@@ -69,32 +70,24 @@
         </template>
       </q-input>
 
-      <q-card-actions align="right">
-        <q-btn
-          type="submit"
-          :loading="save.busy"
-        >
-          Salvar
-        </q-btn>
-      </q-card-actions>
+      <q-form-actions
+        :actions="[
+          {
+            label: 'Voltar',
+            to: '/trip_request',
+          },
+          {
+            label: 'Salvar',
+            color: 'primary',
+            type: 'submit',
+            loading: save.busy,
+            showIf() {
+              return !save.data.id;
+            },
+          },
+        ]"
+      />
     </q-form>
-
-    <q-page-sticky
-      position="bottom-right"
-      class="q-pa-md"
-    >
-      <q-fab
-        color="primary"
-        icon="keyboard_arrow_up"
-        direction="up"
-      >
-        <q-fab-action
-          color="primary"
-          icon="arrow_back"
-          to="/trip_request"
-        />
-      </q-fab>
-    </q-page-sticky>
   </nuxt-layout>
 </template>
 
@@ -102,6 +95,7 @@
 const f = useFormat();
 const route = useRoute();
 const router = useRouter();
+const app = useApp();
 
 const save = useAxios({
   method: "post",

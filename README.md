@@ -81,6 +81,8 @@ Tenho ciência que alguns detalhes da estrutura do sistema são problemáticos, 
 - Não foram aplicadas validações no frontend.
 - Os dados não estão passando por tratamento antes de salvar (remoção de pontos, espaços, conversão para maiúsculo, etc);
 - Validações no backend não foram traduzidas;
+- Interface de paginação precisa de melhorias;
+- Não foi inserida a opção de visualização de notificações (coluna "visualizado em");
 
 ## Desafio
 
