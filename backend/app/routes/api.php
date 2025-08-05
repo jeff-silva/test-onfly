@@ -20,4 +20,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
   Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
   Route::post('trip_request/{id}/approve', [TripRequestController::class, 'approve'])->name('trip_request.approve');
+  Route::post('trip_request/{id}/deny', [TripRequestController::class, 'deny'])->name('trip_request.deny');
 });

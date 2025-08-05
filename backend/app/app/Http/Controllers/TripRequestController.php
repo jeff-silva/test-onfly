@@ -49,6 +49,16 @@ class TripRequestController extends Controller
         $entity = TripRequest::find($id);
         $entity->status = 'approved';
         $entity->save();
+        $entity->eventDispatch('event.trip_request.approved');
+        return compact(['entity']);
+    }
+
+    public function deny($id)
+    {
+        $entity = TripRequest::find($id);
+        $entity->status = 'denied';
+        $entity->save();
+        $entity->eventDispatch('event.trip_request.denied');
         return compact(['entity']);
     }
 }

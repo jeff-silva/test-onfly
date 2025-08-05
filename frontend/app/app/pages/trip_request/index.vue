@@ -4,7 +4,7 @@
       :actions="[
         {
           label: 'Novo',
-          to: '/trip_request',
+          to: '/trip_request/new',
           color: 'primary',
         },
       ]"

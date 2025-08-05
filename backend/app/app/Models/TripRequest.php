@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AppUserRole;
+use App\Traits\ModelEventTrait;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Traits\ModelSearchTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class TripRequest extends Model
 {
     /** @use HasFactory<\Database\Factories\TripRequestFactory> */
-    use HasFactory, ModelSearchTrait;
+    use HasFactory, ModelSearchTrait, ModelEventTrait;
 
     protected $table = 'trip_request';
     protected $fillable = [
@@ -55,7 +56,6 @@ class TripRequest extends Model
             $query->where('user_id', $params->user_id);
         }
 
-        // Log::info($params);
         return $query;
     }
 }

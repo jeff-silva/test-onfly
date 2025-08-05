@@ -73,14 +73,17 @@
       <q-form-actions
         :actions="[
           {
-            label: 'Salvar',
-            showIf() {
-              return app.user && !app.user.id;
-            },
-          },
-          {
             label: 'Voltar',
             to: '/trip_request',
+          },
+          {
+            label: 'Salvar',
+            color: 'primary',
+            type: 'submit',
+            loading: save.busy,
+            showIf() {
+              return !save.data.id;
+            },
           },
         ]"
       />
