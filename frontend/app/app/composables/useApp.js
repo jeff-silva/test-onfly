@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
 export default () => {
+  let loadInterval;
   const app = defineStore("useApp", () => {
     return reactive({
       ready: false,
@@ -10,10 +11,12 @@ export default () => {
         url: "/api/app/load",
         onSuccess() {
           app.user = app.load.response.user || null;
+          app.notifications = app.load.response.notifications || null;
         },
       }),
 
       user: null,
+      notifications: [],
 
       logout: useAxios({
         method: "post",
@@ -45,6 +48,8 @@ export default () => {
         await app.load.submit();
         app.ready = true;
         await app.authVerify();
+        if (loadInterval) clearInterval(loadInterval);
+        setInterval(app.init, 15 * 1000);
       },
     });
   })();

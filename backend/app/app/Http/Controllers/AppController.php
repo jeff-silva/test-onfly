@@ -10,7 +10,14 @@ class AppController extends Controller
     public function load(Request $request)
     {
         $scope = new Fluent();
-        $scope->user = $request->user('sanctum');
+        $scope->user = null;
+        $scope->notifications = [];
+
+        if ($user = $request->user('sanctum')) {
+            $scope->user = $user;
+            $scope->notifications = $user->notifications()->orderBy('id', 'DESC')->get();
+        }
+
         return $scope;
     }
 }

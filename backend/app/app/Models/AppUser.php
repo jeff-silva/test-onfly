@@ -67,7 +67,7 @@ class AppUser extends Authenticatable
     /**
      * Get the notifications for the user.
      */
-    public function appNotifications(): HasMany
+    public function notifications(): HasMany
     {
         return $this->hasMany(AppNotification::class, 'user_id');
     }
