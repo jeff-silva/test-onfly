@@ -24,7 +24,6 @@
           search.params.page = props.pagination.page;
           search.params.per_page = props.pagination.rowsPerPage;
           search.submit();
-          console.log(props);
         }
       "
       :loading="search.busy"
@@ -94,9 +93,21 @@
                   approve.approve(props.row);
                 },
                 showIf() {
-                  return (
-                    app.user.role == 'admin' && props.row.status == 'pending'
-                  );
+                  if (app.user.role != 'admin') return false;
+                  if (props.row.status != 'pending') return false;
+                  return true;
+                },
+              },
+              {
+                icon: 'block',
+                loading: approve.busy,
+                onClick() {
+                  approve.reject(props.row);
+                },
+                showIf() {
+                  if (app.user.role != 'admin') return false;
+                  if (props.row.status != 'pending') return false;
+                  return true;
                 },
               },
             ]"
@@ -122,6 +133,11 @@ const approve = useAxios({
   url: "/api/trip_request/:id/approve",
   async approve(item) {
     approve.url = `/api/trip_request/${item.id}/approve`;
+    await approve.submit();
+    await search.submit();
+  },
+  async reject(item) {
+    approve.url = `/api/trip_request/${item.id}/reject`;
     await approve.submit();
     await search.submit();
   },

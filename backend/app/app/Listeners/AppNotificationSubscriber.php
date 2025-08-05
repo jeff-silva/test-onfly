@@ -12,7 +12,7 @@ class AppNotificationSubscriber
     {
         return [
             'event.trip_request.approved' => 'onTripRequestApproved',
-            'event.trip_request.denied' => 'onTripRequestDenied',
+            'event.trip_request.rejected' => 'onTripRequestRejected',
         ];
     }
 
@@ -25,7 +25,7 @@ class AppNotificationSubscriber
         ]);
     }
 
-    public function onTripRequestDenied($entity)
+    public function onTripRequestRejected($entity)
     {
         AppNotification::create([
             'user_id' => $entity->user_id,

@@ -53,12 +53,12 @@ class TripRequestController extends Controller
         return compact(['entity']);
     }
 
-    public function deny($id)
+    public function reject($id)
     {
         $entity = TripRequest::find($id);
-        $entity->status = 'denied';
+        $entity->status = 'rejected';
         $entity->save();
-        $entity->eventDispatch('event.trip_request.denied');
+        $entity->eventDispatch('event.trip_request.rejected');
         return compact(['entity']);
     }
 }
