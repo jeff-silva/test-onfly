@@ -41,6 +41,9 @@ class TripRequest extends Model
     {
         return [
             'user_id' => null,
+            'status' => null,
+            'date_start' => null,
+            'date_final' => null,
         ];
     }
 
@@ -54,6 +57,24 @@ class TripRequest extends Model
 
         if ($params->user_id) {
             $query->where('user_id', $params->user_id);
+        }
+
+        if ($params->status) {
+            $query->where('status', $params->status);
+        }
+
+        if ($params->date_start) {
+            $query->where(function ($q) use ($params) {
+                $q->where('departure_date', '>=', $params->date_start);
+                $q->orWhere('return_date', '>=', $params->date_start);
+            });
+        }
+
+        if ($params->date_final) {
+            $query->where(function ($q) use ($params) {
+                $q->where('departure_date', '<=', $params->date_final);
+                $q->orWhere('return_date', '<=', $params->date_final);
+            });
         }
 
         return $query;

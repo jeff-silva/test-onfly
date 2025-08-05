@@ -11,6 +11,78 @@
     />
     <br />
 
+    <div
+      class="row"
+      style="gap: 15px"
+    >
+      <q-input
+        :model-value="f.date(search.params.date_start)"
+        label="Data inicial"
+        readonly
+      >
+        <template #append>
+          <q-icon
+            name="event"
+            class="cursor-pointer"
+          >
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date
+                v-model="search.params.date_start"
+                mask="YYYY-MM-DD"
+                @update:model-value="search.submit()"
+              />
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+
+      <q-input
+        :model-value="f.date(search.params.date_final)"
+        label="Data final"
+        readonly
+      >
+        <template #append>
+          <q-icon
+            name="event"
+            class="cursor-pointer"
+          >
+            <q-popup-proxy
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+            >
+              <q-date
+                v-model="search.params.date_final"
+                mask="YYYY-MM-DD"
+                @update:model-value="search.submit()"
+              />
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+
+      <q-select
+        v-model="search.params.status"
+        label="Standard"
+        option-value="value"
+        option-label="label"
+        emit-value
+        style="min-width: 150px"
+        :options="[
+          { value: null, label: 'Todos' },
+          { value: 'pending', label: 'Pendente' },
+          { value: 'approved', label: 'Aprovado' },
+          { value: 'rejected', label: 'Rejeitado' },
+        ]"
+        @update:model-value="search.submit()"
+      />
+    </div>
+    <br />
+
     <q-table
       :pagination="{
         page: search.params.page,
@@ -126,6 +198,9 @@ const search = useAxios({
   method: "get",
   url: "/api/trip_request",
   response: { data: [] },
+  onSuccess() {
+    search.params = search.response.params;
+  },
 });
 
 const approve = useAxios({
